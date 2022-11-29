@@ -3,12 +3,15 @@ package jm.task.core.jdbc;
 import jm.task.core.jdbc.dao.UserDao;
 import jm.task.core.jdbc.dao.UserDaoHibernateImpl;
 import jm.task.core.jdbc.dao.UserDaoJDBCImpl;
+import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
+import javax.transaction.SystemException;
 import java.sql.SQLException;
+import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, SystemException {
 
             UserDao userDao = new UserDaoHibernateImpl();
 
@@ -19,10 +22,11 @@ public class Main {
             userDao.saveUser("Pasha","Sidorov",(byte)4);
             userDao.saveUser("Anton","Popov", (byte)5);
 
-            var list = userDao.getAllUsers();
-            System.out.printf(list.toString());
+            List<User> userList = userDao.getAllUsers();
 
-            userDao.cleanUsersTable();
+            System.out.println(userList);
+
+             userDao.cleanUsersTable();
 
             userDao.dropUsersTable();
 
